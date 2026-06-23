@@ -33,10 +33,9 @@ def main():
 
     print("Сохранение адаптера...")
 
+    # Сохраняем модель и токенизатор
     trainer.save_model(OUTPUT_DIR)
-
     tokenizer = load_tokenizer()
-
     tokenizer.save_pretrained(OUTPUT_DIR)
 
     print("Готово")
