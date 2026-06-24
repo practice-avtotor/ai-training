@@ -1,5 +1,6 @@
 from pathlib import Path
 from datasets import Dataset
+from datasets import load_dataset
 
 """
 1) Предполагается, что все файлы для CPT в TXT формате
@@ -30,3 +31,13 @@ def load_texts(folder: str):
 def build_dataset(folder: str):
     texts = load_texts(folder)
     return Dataset.from_dict({"text": texts})
+
+
+def load_sft_dataset(path: str):
+    """
+    Загружает json с инструкциями
+    """
+
+    dataset = load_dataset("json", data_files=path, split="train")
+
+    return dataset
