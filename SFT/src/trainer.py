@@ -1,5 +1,4 @@
 from trl import SFTTrainer, SFTConfig
-from transformers import TrainingArguments
 from ...config import (
     SFT_OUTPUT_DIR, SFT_LEARNING_RATE, SFT_EPOCHS,
     BATCH_SIZE, GRAD_ACCUMULATION, SFT_MAX_LENGTH
