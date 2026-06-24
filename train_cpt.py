@@ -1,8 +1,8 @@
 from config import DATA_DIR, OUTPUT_DIR
-from scr.dataset import build_dataset
-from scr.tokenizer import tokenize_dataset, load_tokenizer
-from scr.model import load_model
-from scr.trainer import create_trainer
+from src.dataset import build_dataset
+from src.tokenizer import tokenize_dataset, load_tokenizer
+from src.model import load_model
+from src.cpt_trainer import create_trainer
 
 """
 Запуск цикла обучения CPT

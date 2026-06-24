@@ -1,7 +1,7 @@
 import torch
 from transformers import AutoModelForCausalLM, BitsAndBytesConfig
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
-from ...config import MODEL_NAME, LORA_R, LORA_ALPHA, LORA_DROPOUT
+from ..config import MODEL_NAME, LORA_R, LORA_ALPHA, LORA_DROPOUT
 
 # Предполагается использовать видеокарту RTX 3080ti 12GB
 
