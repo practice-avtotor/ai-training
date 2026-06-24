@@ -6,13 +6,17 @@ from datasets import Dataset
 Токенизация и формирование блоков для сшивания текстов
 """
 
-# Скачиваем токенизатор
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, trust_remote_code=True)
+def load_tokenizer():
+    """
+    Возвращает токенизатор
+    """
+    return AutoTokenizer.from_pretrained(MODEL_NAME, trust_remote_code=True)
 
 def tokenize_batch(batch):
     """
     Превращает текст в токены
     """
+    tokenizer = load_tokenizer()
     return tokenizer(batch["text"])
 
 
