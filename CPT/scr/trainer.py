@@ -1,5 +1,5 @@
 from transformers import Trainer, TrainingArguments
-from ..config import (
+from ...config import (
     OUTPUT_DIR, BATCH_SIZE, GRAD_ACCUMULATION,
     LEARNING_RATE, EPOCHS
 )
