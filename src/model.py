@@ -47,3 +47,16 @@ def load_model():
     model = get_peft_model(base_model, lora_config)
     model.print_trainable_parameters()
     return model
+
+
+def load_cpt_model(path):
+    """
+    Для SFT загружает чистую модель и готовый LoRA адаптер после CPT
+    """
+    base_model = load_base_quantized_model()
+
+    # Подгружаем веса LoRa адаптера
+    model = PeftModel.from_pretrained(base_model, path, is_trainable=True)
+
+    model.print_trainable_parameters()
+    return model
