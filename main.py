@@ -1,37 +1,117 @@
-import sys
 import os
-from processor import process_pdf_url
+import tempfile
+import time
+from downloader import get_pdf_links_from_file, download_pdf
+from pdf_processor import process_pdf, save_text_to_file
+
+
+def get_safe_filename(url, index):
+    """
+    Create a safe filename from URL
+    """
+    # Extract filename from URL or create from index
+    filename = url.split('/')[-1]
+    if not filename or not filename.endswith('.pdf'):
+        filename = f'pdf_{index}.pdf'
+    
+    # Remove invalid characters for Windows
+    invalid_chars = '<>:"/\\|?*'
+    for char in invalid_chars:
+        filename = filename.replace(char, '_')
+    
+    # Remove .pdf extension for folder name
+    filename = filename.replace('.pdf', '')
+    
+    return filename
+
+
+def process_pdf_from_url(url, index, output_folder):
+    """
+    Download and process a single PDF from URL
+    """
+    temp_pdf_path = None
+    try:
+        # Create temporary file
+        with tempfile.NamedTemporaryFile(suffix='.pdf', delete=False) as tmp_file:
+            temp_pdf_path = tmp_file.name
+        
+        # Download PDF
+        if download_pdf(url, temp_pdf_path):
+            try:
+                # Process the PDF
+                text_per_page = process_pdf(temp_pdf_path)
+                
+                # Create filename for this PDF
+                safe_filename = get_safe_filename(url, index)
+                output_file = os.path.join(output_folder, f'{safe_filename}.txt')
+                
+                # Save extracted text to file (clean version without headers)
+                save_text_to_file(text_per_page, output_file)
+                
+                print(f"Successfully processed PDF {index} -> saved to {output_file}")
+                return True
+                
+            except Exception as e:
+                print(f"Error processing PDF {index}: {e}")
+                return False
+            finally:
+                # Clean up temporary file
+                if temp_pdf_path and os.path.exists(temp_pdf_path):
+                    try:
+                        time.sleep(0.3)
+                        os.remove(temp_pdf_path)
+                    except PermissionError:
+                        time.sleep(2)
+                        try:
+                            os.remove(temp_pdf_path)
+                        except PermissionError:
+                            print(f"Warning: Could not remove temporary file: {temp_pdf_path}")
+        else:
+            print(f"Failed to download PDF {index}")
+            return False
+            
+    except Exception as e:
+        print(f"Error with PDF {index}: {e}")
+        if temp_pdf_path and os.path.exists(temp_pdf_path):
+            try:
+                os.remove(temp_pdf_path)
+            except:
+                pass
+        return False
+
 
 def main():
-    if len(sys.argv) < 2:
-        print("Usage: python main.py links.txt")
-        sys.exit(1)
+    # Path to the text file with PDF links
+    links_file = 'links.txt'
     
-    file_path = sys.argv[1]
+    # Output folder
+    output_folder = 'extracted_texts'
     
-    if not os.path.exists(file_path):
-        print(f"File not found: {file_path}")
-        sys.exit(1)
+    # Read links from file
+    if not os.path.exists(links_file):
+        print(f"Error: {links_file} not found!")
+        return
     
-    with open(file_path, 'r') as f:
-        urls = [line.strip() for line in f if line.strip()]
+    pdf_links = get_pdf_links_from_file(links_file)
+    print(f"Found {len(pdf_links)} PDF links")
     
-    print(f"Found {len(urls)} URLs to process")
+    # Create output folder
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
     
-    success = 0
-    failed = 0
+    # Process each PDF
+    successful = 0
+    for idx, url in enumerate(pdf_links, 1):
+        print(f"\nProcessing PDF {idx}/{len(pdf_links)}: {url}")
+        
+        if process_pdf_from_url(url, idx, output_folder):
+            successful += 1
     
-    for i, url in enumerate(urls, 1):
-        print(f"[{i}/{len(urls)}] Processing: {url[:80]}...")
-        result = process_pdf_url(url)
-        if result:
-            print(f"  OK: {result}")
-            success += 1
-        else:
-            print(f"  FAIL: {url[:80]}...")
-            failed += 1
-    
-    print(f"\nCompleted: {success} OK, {failed} FAILED")
+    print(f"\n{'='*50}")
+    print(f"Processing complete!")
+    print(f"Successfully processed: {successful}/{len(pdf_links)}")
+    print(f"Results saved in: {output_folder}")
+
 
 if __name__ == "__main__":
     main()
