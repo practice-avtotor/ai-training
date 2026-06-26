@@ -7,6 +7,7 @@ from extract_text import text_extraction, get_tables_from_page, is_text_in_table
 def process_pdf(pdf_path):
     with open(pdf_path, 'rb') as pdfFileObj:
         pdfReaded = PyPDF2.PdfReader(pdfFileObj)
+
         text_per_page = {}
 
         for pagenum, page in enumerate(extract_pages(pdf_path)):
@@ -30,7 +31,11 @@ def process_pdf(pdf_path):
                     if tables_bboxes and is_text_in_table(element_bbox, tables_bboxes):
                         continue
                     
-                    (line_text, format_per_line) = text_extraction(element)
+                    (line_text, format_per_line) = text_extraction(element, remove_headings=True)
+                    
+                    if line_text is None:
+                        continue
+                    
                     page_text.append(line_text)
                     line_format.append(format_per_line)
                     page_content.append(line_text)

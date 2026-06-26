@@ -1,10 +1,39 @@
+# To read the PDF
 import PyPDF2
+# To analyze the PDF layout and extract text
 from pdfminer.high_level import extract_pages
 from pdfminer.layout import LTTextContainer, LTChar
 import pdfplumber
 
 
-def text_extraction(element):
+def is_heading(text_line, size_threshold=12):
+    chars = []
+    for character in text_line:
+        if isinstance(character, LTChar):
+            chars.append(character)
+    
+    if not chars:
+        return False
+    
+    sizes = [char.size for char in chars]
+    avg_size = sum(sizes) / len(sizes)
+    
+    is_italic = any('Italic' in char.fontname or 'Oblique' in char.fontname for char in chars)
+    
+    text = text_line.get_text().strip()
+    is_all_caps = text.isupper() and len(text) > 3
+    
+    if avg_size >= size_threshold:
+        return True
+    if avg_size >= 10 and is_italic:
+        return True
+    if avg_size >= 11 and is_all_caps:
+        return True
+    
+    return False
+
+
+def text_extraction(element, remove_headings=True):
     line_text = element.get_text()
     
     line_formats = []
@@ -15,6 +44,17 @@ def text_extraction(element):
                     line_formats.append(character.fontname)
                     line_formats.append(character.size)
     format_per_line = list(set(line_formats))
+    
+    if remove_headings:
+        should_remove = False
+        for text_line in element:
+            if isinstance(text_line, LTTextContainer):
+                if is_heading(text_line):
+                    should_remove = True
+                    break
+        
+        if should_remove:
+            return (None, None)
     
     return (line_text, format_per_line)
 
