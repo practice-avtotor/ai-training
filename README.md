@@ -1,8 +1,8 @@
 # Дообучение LLM для перевода 
 
-> **Статус обучения модели:** Подготовка к обучению
+> **Статус обучения модели:** SFT-обучение
 
-> **Статус готовности данных:** Сбор данных 
+> **Статус готовности данных:** Сбор данных завершен 
 
 ## Стек
 
@@ -13,8 +13,12 @@
 - PEFT (QLoRA)
 - TRL
 
+## Используемое оборудование
+
+- RTX 3080 (10 GB)
+
 ## Загрузка необходимых библиотек
 
 ```bash
-pip install torch --index-url https://download.pytorch.org/whl/cu121 \
+pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu121 \
   && pip install -r requirements.txt
