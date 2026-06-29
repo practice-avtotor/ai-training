@@ -2,3 +2,9 @@
 .env
 __pycache__/
 .idea/
+json_parser.py
+json_random.py
+operational_cards_translation.jsonl
+train.jsonl
+afca.py
+afca.txt
