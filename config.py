@@ -3,7 +3,7 @@ DATA_DIR = "data"
 # OUTPUT_DIR = "output/qwen_cpt" # если есть CPT, используем новую модель
 OUTPUT_DIR = "llm_qwen3_8B" # если нет CPT, используем исходную модель
 
-MAX_LENGTH = 1024       # максимальная длина в токенах
+MAX_LENGTH = 512       # максимальная длина в токенах
 
 BLOCK_SIZE = 1024       # размер контекста в токенах
 
@@ -27,7 +27,7 @@ EPOCHS = 3              # количество эпох
 SFT_DATASET = "data/train.jsonl"
 SFT_OUTPUT_DIR = "output/qwen_sft"
 
-SFT_MAX_LENGTH = 1024       # максимальная длина в токенах
+SFT_MAX_LENGTH = 512       # максимальная длина в токенах
 
 SFT_LEARNING_RATE = 1e-5    # шаг градиентного спуска
 
