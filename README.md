@@ -12,3 +12,9 @@
 - Hugging Face Datasets
 - PEFT (QLoRA)
 - TRL
+
+## Загрузка необходимых библиотек
+
+```bash
+pip install torch torchvision torchaudio --index-url [https://download.pytorch.org/whl/cu121](https://download.pytorch.org/whl/cu121) \
+  && pip install -r requirements.txt
