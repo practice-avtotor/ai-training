@@ -1,7 +1,7 @@
 from config import SFT_DATASET, SFT_OUTPUT_DIR, OUTPUT_DIR
 from src.dataset import load_sft_dataset
 from src.sft_trainer import create_sft_trainer
-from src.model import load_cpt_model
+from src.model import load_cpt_model, load_model
 from src.tokenizer import load_tokenizer
 
 
@@ -18,7 +18,7 @@ def main():
 
     print("Загрузка модели...")
 
-    model = load_cpt_model(OUTPUT_DIR)
+    model = load_model()
 
     print("Создание SFTTrainer...")
 
