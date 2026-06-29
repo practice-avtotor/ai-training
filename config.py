@@ -24,7 +24,7 @@ EPOCHS = 3              # количество эпох
 # Параметры для SFT
 #
 
-SFT_DATASET = "data/train.jsonl"
+SFT_DATASET = "data/train_data.jsonl"
 SFT_OUTPUT_DIR = "output/qwen_sft"
 
 SFT_MAX_LENGTH = 512       # максимальная длина в токенах
