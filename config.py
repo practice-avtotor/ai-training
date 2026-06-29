@@ -3,12 +3,12 @@ DATA_DIR = "data"
 # OUTPUT_DIR = "output/qwen_cpt" # если есть CPT, используем новую модель
 OUTPUT_DIR = "llm_qwen3_8B" # если нет CPT, используем исходную модель
 
-MAX_LENGTH = 2048       # максимальная длина в токенах
+MAX_LENGTH = 1024       # максимальная длина в токенах
 
-BLOCK_SIZE = 2048       # размер контекста в токенах
+BLOCK_SIZE = 1024       # размер контекста в токенах
 
-LORA_R = 32             # ранг матрицы
-LORA_ALPHA = 64         # коэффициент масштабировнаия
+LORA_R = 16             # ранг матрицы
+LORA_ALPHA = 32         # коэффициент масштабировнаия
 LORA_DROPOUT = 0.05     # вероятность дропаута (защита от переобучения)
 
 BATCH_SIZE = 1          # размер микро батча
@@ -27,7 +27,7 @@ EPOCHS = 3              # количество эпох
 SFT_DATASET = "data/train.jsonl"
 SFT_OUTPUT_DIR = "output/qwen_sft"
 
-SFT_MAX_LENGTH = 2048       # максимальная длина в токенах
+SFT_MAX_LENGTH = 1024       # максимальная длина в токенах
 
 SFT_LEARNING_RATE = 1e-5    # шаг градиентного спуска
 
