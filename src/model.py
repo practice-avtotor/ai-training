@@ -22,7 +22,7 @@ def load_base_quantized_model():
         MODEL_NAME,
         quantization_config=bnb_config,
         device_map={"": 0},
-        torch_dtype=torch.bfloat16,
+        dtype=torch.bfloat16,
         trust_remote_code=True
     )
 
