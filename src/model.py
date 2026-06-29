@@ -26,8 +26,7 @@ def load_base_quantized_model():
         trust_remote_code=True
     )
 
-    # Подготавливаем модель для kbit обучения
-    model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=True)
+    model.enable_input_require_grads()
     return model
 
 
