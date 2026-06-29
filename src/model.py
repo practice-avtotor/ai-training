@@ -22,6 +22,7 @@ def load_base_quantized_model():
         MODEL_NAME,
         quantization_config=bnb_config,
         device_map={"": 0},
+        torch_dtype=torch.bfloat16,
         trust_remote_code=True
     )
 
@@ -42,7 +43,7 @@ def load_model():
         lora_dropout=LORA_DROPOUT,
         bias="none",
         task_type="CAUSAL_LM",
-        target_modules="all-linear"
+        target_modules=["q_proj", "k_proj", "v_proj", "o_proj"]
     )
 
     model = get_peft_model(base_model, lora_config)
