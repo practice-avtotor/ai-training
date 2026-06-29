@@ -1,4 +1,4 @@
-MODEL_NAME = "Qwen/Qwen3-14B"
+MODEL_NAME = "llm_qwen3_8B"
 DATA_DIR = "data"
 OUTPUT_DIR = "output/qwen_cpt"
 
