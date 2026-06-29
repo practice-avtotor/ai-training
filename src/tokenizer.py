@@ -1,5 +1,5 @@
 from transformers import AutoTokenizer
-from ..config import MODEL_NAME, BLOCK_SIZE
+from config import MODEL_NAME, BLOCK_SIZE
 from datasets import Dataset
 
 """
