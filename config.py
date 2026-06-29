@@ -1,6 +1,7 @@
-MODEL_NAME = "llm_qwen3_8B"
+MODEL_NAME = "llm_qwen3_8B" # папка с исходной моделью
 DATA_DIR = "data"
-OUTPUT_DIR = "output/qwen_cpt"
+# OUTPUT_DIR = "output/qwen_cpt" # если есть CPT, используем новую модель
+OUTPUT_DIR = "llm_qwen3_8B" # если нет CPT, используем исходную модель
 
 MAX_LENGTH = 2048       # максимальная длина в токенах
 
