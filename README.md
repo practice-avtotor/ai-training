@@ -12,14 +12,15 @@
 - Hugging Face Datasets
 - PEFT (QLoRA)
 - TRL
-
----
+- BitsAndBytes 
+- lm-evaluation-harness 
+- RapidFuzz 
+- SacreBLEU
+- NumPy
 
 ## Используемое оборудование
 
 - RTX 3080 (10 GB)
-
----
 
 ## Загрузка необходимых библиотек
 
@@ -27,8 +28,6 @@
 pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu121 \
   && pip install -r requirements.txt
 ```
-
----
 
 ## Результаты тестирования
 
